@@ -1,0 +1,29 @@
+{
+    "use subset files": [ "subsets killer 1.json" ],
+    "constraints": [
+        {
+            "subset": "cage1",
+            "constraints": [
+                {
+                    "name": "no duplicates"
+                },
+                {
+                    "name": "sum equals to value",
+                    "value": 44
+                }
+            ]
+        },
+        {
+            "subset": "cage2",
+            "constraints": [
+                {
+                    "name": "no duplicates"
+                },
+                {
+                    "name": "sum equals to value",
+                    "value": 13
+                }
+            ]
+        }
+     ]
+}

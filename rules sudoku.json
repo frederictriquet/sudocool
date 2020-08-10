@@ -1,0 +1,115 @@
+{
+    "use subset files": [ "subsets boxes.json", "subsets rows.json", "subsets columns.json" ],
+    "constraints": [
+        {
+            "subset": "box1",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "box2",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "box3",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "box4",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "box5",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "box6",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "box7",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "box8",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "box9",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+
+        {
+            "subset": "row1",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "row2",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "row3",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "row4",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "row5",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "row6",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "row7",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "row8",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "row9",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+
+        {
+            "subset": "col1",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "col2",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "col3",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "col4",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "col5",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "col6",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "col7",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "col8",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        },
+        {
+            "subset": "col9",
+            "constraints": [ { "name": "no duplicates" }, { "name": "all 9" } ]
+        }
+    ]
+}
