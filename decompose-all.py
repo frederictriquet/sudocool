@@ -9,13 +9,6 @@ import itertools
 # - suite de chiffres = 1..9
 # - si on precise le "-", alors c'est 1..9 moins la suite de chiffres
 
-def decompose(total: int, howMany: int, nb: list) -> None:
-    combinations = itertools.combinations(nb, howMany)
-    for c in combinations:
-        if sum(c) == total:
-            print(c)
-
-
 def main():
     total = int(sys.argv[1])
     howMany = int(sys.argv[2])
@@ -27,11 +20,10 @@ def main():
     else:
         nb = [ x for x in range(1,10) ]
     print(f'With {nb}')
-    if howMany == 0:
-        for howMany in range(1,10):
-            decompose(total, howMany, nb)
-    else:
-        decompose(total, howMany, nb)
+    combinations = itertools.combinations(nb, howMany)
+    for c in combinations:
+        if sum(c) == total:
+            print(c)
 
 if __name__ == "__main__":
     # execute only if run as a script
