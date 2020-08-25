@@ -24,6 +24,18 @@
                     "value": 13
                 }
             ]
+        },
+        {
+            "subset": "cage3",
+            "constraints": [
+                {
+                    "name": "no duplicates"
+                },
+                {
+                    "name": "sum equals to value",
+                    "value": 20
+                }
+            ]
         }
      ]
 }

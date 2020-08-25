@@ -1,13 +1,13 @@
 {
-    "givens": "givens2.json",
+    "givens": "givens knight 1.json",
     "rules": [
         {
             "name": "sudoku",
             "file": "rules sudoku.json"
         },
         {
-            "name": "killer",
-            "file": "rules killer 1.json"
+            "name": "antiknight",
+            "file": "rules antiknight.json"
         }
     ]
 }

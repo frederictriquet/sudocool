@@ -1,0 +1,9 @@
+{
+    "givens": "givens7.json",
+    "rules": [
+        {
+            "name": "sudoku",
+            "file": "rules sudoku.json"
+        }
+    ]
+}

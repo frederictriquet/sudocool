@@ -18,7 +18,8 @@ class AbstractRule(ABC):
 
     def loadRules(self, rulesFilename: str):
         rules = loadJson(rulesFilename)
-        self.loadSubsets(rules['use subset files'])
+        if 'use subset files' in rules:
+            self.loadSubsets(rules['use subset files'])
         for constraintsForSubset in rules['constraints']:
             self.loadConstraintsForSubset(constraintsForSubset)
         # print("SUBSETS")

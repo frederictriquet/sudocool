@@ -2,6 +2,7 @@
 from abstract_rule import AbstractRule
 from rule_sudoku import RuleSudoku
 from rule_killer import RuleKiller
+from rule_antiknight import RuleAntiknight
 
 class RuleFactory:
     @staticmethod
@@ -9,6 +10,10 @@ class RuleFactory:
         name = ruleDefinition['name']
         if name == 'sudoku':
             return RuleSudoku(ruleDefinition)
-        if name == 'killer':
+        elif name == 'killer':
             return RuleKiller(ruleDefinition)
+        elif name == 'antiknight':
+            return RuleAntiknight(ruleDefinition)
+        else:
+            print(f'@RuleFactory.buildRule: unknown rule name "{name}"')
         return None

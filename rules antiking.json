@@ -1,0 +1,12 @@
+{
+    "constraints": [
+        {
+            "subset": "grid",
+            "constraints": [
+                {
+                    "name": "antiking"
+                }
+            ]
+        }
+     ]
+}

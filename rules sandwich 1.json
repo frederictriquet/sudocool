@@ -1,0 +1,77 @@
+{
+    "use subset files": [ "subsets rows.json", "subsets columns.json" ],
+    "constraints": [
+        {
+            "subset": "row2",
+            "constraints": [
+                {
+                    "name": "sandwich",
+                    "value": 0
+                }
+            ]
+        },
+        {
+            "subset": "row4",
+            "constraints": [
+                {
+                    "name": "sandwich",
+                    "value": 8
+                }
+            ]
+        },
+        {
+            "subset": "row4",
+            "constraints": [
+                {
+                    "name": "sandwich",
+                    "value": 7
+                }
+            ]
+        },
+        {
+            "subset": "row8",
+            "constraints": [
+                {
+                    "name": "sandwich",
+                    "value": 21
+                }
+            ]
+        },
+        {
+            "subset": "col2",
+            "constraints": [
+                {
+                    "name": "sandwich",
+                    "value": 10
+                }
+            ]
+        },
+        {
+            "subset": "col4",
+            "constraints": [
+                {
+                    "name": "sandwich",
+                    "value": 28
+                }
+            ]
+        },
+        {
+            "subset": "col6",
+            "constraints": [
+                {
+                    "name": "sandwich",
+                    "value": 14
+                }
+            ]
+        },
+        {
+            "subset": "col8",
+            "constraints": [
+                {
+                    "name": "sandwich",
+                    "value": 27
+                }
+            ]
+        },
+    ]
+}

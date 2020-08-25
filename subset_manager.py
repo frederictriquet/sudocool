@@ -1,3 +1,4 @@
+from os import stat
 from tools import loadJson
 
 
@@ -23,3 +24,6 @@ class SubsetManager:
         itr = iter(flatCells)
         return [ [x,y] for x,y in zip(itr,itr) ]
 
+    @staticmethod
+    def initGridSubset():
+        SubsetManager.subsets['grid'] =  [ [x,y] for x in range(1,10) for y in range(1,10) ]

