@@ -1,7 +1,10 @@
 import json
 
 def loadJson(filename: str):
-    with open(filename) as jsonFile:
-        stringData = jsonFile.read()
-        return json.loads(stringData)
-    return None
+    try:
+        with open(filename) as jsonFile:
+            stringData = jsonFile.read()
+            return json.loads(stringData)
+    except FileNotFoundError:
+        print(f'File not found: {filename}')
+        return None
