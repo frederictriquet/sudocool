@@ -19,7 +19,7 @@ class Solver:
         self.rules = self.loadRules(puzzleDefinition['rules'])
         if 'grid' in ConstraintManager.subsets:
             SubsetManager.initGridSubset()
-        ConstraintManager.dump()
+        # ConstraintManager.dump()
         # sys.exit()
 
     # def processSubsets(self, subsets: list):
@@ -94,19 +94,19 @@ class Solver:
 
     def gridIsSolved(self) -> bool:
         constraintsOK = self.checkConstraints()
-        # print(f'ALL CONSTRAINTS ARE OK: {constraintsOK}')
+        print(f'ALL CONSTRAINTS ARE OK: {constraintsOK}')
         return constraintsOK
       
     def checkConstraints(self) -> bool:
         result = True
         for subsetName in ConstraintManager.subsets:
-            # print(f'processing {subset}')
+            print(f'processing {subsetName}')
             for constraint in ConstraintManager.subsets[subsetName]:
                 constraintResult = self.verifyConstraint(constraint, subsetName)
-                # print(f'   {constraint} -> {constraintResult}')
+                print(f'   {constraint} -> {constraintResult}')
                 if not constraintResult:
                     result = False
-                    return result
+                #    return result
         return result
     
     def verifyConstraint(self, constraint: dict, subsetName: str) -> bool:
@@ -116,6 +116,8 @@ class Solver:
             return self.verifyAll9(subsetName)
         elif constraint['name'] == 'sum equals to value':
             return self.verifySumEqualsToValue(subsetName, constraint['value'])
+        elif constraint['name'] == 'antiknight':
+            return self.verifyAntiknight()
         else:
             print(f'unknown constraint {constraint} applied on subset {subsetName}')
             return False
@@ -147,6 +149,15 @@ class Solver:
                 sum = sum + cell.value
         return sum == value
 
+    def verifyAntiknight(self) -> bool:
+        for cellDefinition in SubsetManager.subsets['grid']:
+            cell = self.currentGrid.getCell(cellDefinition[0], cellDefinition[1])
+            if cell and cell.value > 0:
+                for targetRow, targetColumn in self.getKnightTargets():
+                    targetCell = self.currentGrid.getCell(cellDefinition[0] + targetRow, cellDefinition[1] + targetColumn)
+                    if targetCell and targetCell.value == cell.value:
+                        return False
+        return True
 
     def applyConstraints(self) -> bool:
         areValuesRemoved = False
