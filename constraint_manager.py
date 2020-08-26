@@ -16,7 +16,7 @@ class ConstraintManager:
     
     @staticmethod
     def addConstraintToSubset(constraint: object, subset: str):
-        print(f'{subset} <- {constraint}')
+        # print(f'{subset} <- {constraint}')
         if subset not in ConstraintManager.subsets:
             ConstraintManager.subsets[subset] = []
         ConstraintManager.subsets[subset].append(constraint)
