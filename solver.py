@@ -124,33 +124,27 @@ class Solver:
 
     def verifyNoDuplicates(self, subsetName: str) -> bool:
         values = set()
-        for cellDefinition in SubsetManager.subsets[subsetName]:
-            cell = self.currentGrid.getCell(cellDefinition[0], cellDefinition[1])
-            if cell and cell.value > 0:
-                if cell.value in values:
-                    return False
-                else:
-                    values.add(cell.value)
+        for cell in SubsetManager.cellsWithValueOf(self.currentGrid, subsetName):
+            if cell.value in values:
+                return False
+            else:
+                values.add(cell.value)
         return True
     
     def verifyAll9(self, subsetName: str) -> bool:
         values = { x: False for x in range(1,10) }
-        for cellDefinition in SubsetManager.subsets[subsetName]:
-            cell = self.currentGrid.getCell(cellDefinition[0], cellDefinition[1])
-            if cell and cell.value > 0:
-                values.pop(cell.value, 0)
+        for cell in SubsetManager.cellsWithValueOf(self.currentGrid, subsetName):
+            values.pop(cell.value, 0)
         return len(values) == 0
     
     def verifySumEqualsToValue(self, subsetName: str, value: int) -> bool:
         sum = 0
-        for cellDefinition in SubsetManager.subsets[subsetName]:
-            cell = self.currentGrid.getCell(cellDefinition[0], cellDefinition[1])
-            if cell and cell.value > 0:
-                sum = sum + cell.value
+        for cell in SubsetManager.cellsWithValueOf(self.currentGrid, subsetName):
+            sum = sum + cell.value
         return sum == value
 
     def verifyAntiknight(self) -> bool:
-        for cellDefinition in SubsetManager.subsets['grid']:
+        for cellDefinition in SubsetManager.cellDefinitionsOf('grid'):
             cell = self.currentGrid.getCell(cellDefinition[0], cellDefinition[1])
             if cell and cell.value > 0:
                 for targetRow, targetColumn in self.getKnightTargets():
@@ -183,7 +177,7 @@ class Solver:
         return areValuesRemoved
 
     def removeValuesFromCandidateAtKnightPosition(self) -> bool:
-        for cellDefinition in SubsetManager.subsets['grid']:
+        for cellDefinition in SubsetManager.cellDefinitionsOf('grid'):
             cell = self.currentGrid.getCell(cellDefinition[0], cellDefinition[1])
             if cell and cell.value > 0:
                 for targetRow, targetColumn in self.getKnightTargets():
@@ -217,14 +211,11 @@ class Solver:
         values = set()
         areValuesRemoved = False
         # print(f'{subset}')
-        for cellDefinition in SubsetManager.subsets[subsetName]:
-            cell = self.currentGrid.getCell(cellDefinition[0], cellDefinition[1])
-            if cell and cell.value > 0:
-                values.add(cell.value)
+        for cell in SubsetManager.cellsWithValueOf(self.currentGrid, subsetName):
+            values.add(cell.value)
         
-        for cellDefinition in SubsetManager.subsets[subsetName]:
-            cell = self.currentGrid.getCell(cellDefinition[0], cellDefinition[1])
-            if cell and cell.value == 0:
+        for cell in SubsetManager.cellsOf(self.currentGrid, subsetName):
+            if cell.value == 0:
                 previousLen = len(cell.candidates)
                 cell.candidates = list(set(cell.candidates) - values)
                 cell.candidates.sort()
@@ -236,8 +227,7 @@ class Solver:
     def promoteHiddenSingles(self, subsetName: str) -> bool:
         areValuesRemoved = False
         counts = [ [] for i in range(10) ]
-        for cellDefinition in SubsetManager.subsets[subsetName]:
-            cell = self.currentGrid.getCell(cellDefinition[0], cellDefinition[1])
+        for cell in SubsetManager.cellsOf(self.currentGrid, subsetName):
             if cell.value == 0:
                 for value in cell.candidates:
                     counts[value].append(cell)
