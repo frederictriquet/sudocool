@@ -1,6 +1,4 @@
-from os import stat
 from tools import loadJson
-
 
 class SubsetManager:
 

@@ -1,11 +1,11 @@
-import json, copy
+import copy
 from grid import Grid
 from tools import loadJson
 from rule_factory import RuleFactory
 from constraint_manager import ConstraintManager
 from subset_manager import SubsetManager
 import itertools
-import sys
+# import sys
 
 class Solver:
     def __init__(self, puzzleFileName: str):

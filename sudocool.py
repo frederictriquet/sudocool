@@ -2,7 +2,6 @@
 
 import sys
 from solver import Solver
-from cell import Cell
 
 def main():
     solver = Solver(sys.argv[1])

@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 
-import sys
+# import sys
 import itertools
 
 l0 = [ 'a', 'b', 'c', 'd', 'e' ]
