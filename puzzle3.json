@@ -1,5 +1,5 @@
 {
-    "givens": "givens7.json",
+    "givens": "givens15.json",
     "rules": [
         {
             "name": "sudoku",

@@ -8,6 +8,10 @@
         {
             "name": "antiknight",
             "file": "rules antiknight.json"
+        },
+        {
+            "name": "antiking",
+            "file": "rules antiking.json"
         }
     ]
 }

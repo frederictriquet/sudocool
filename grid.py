@@ -7,15 +7,19 @@ class Grid:
         if isinstance(givens, str):
             givens = loadJson(givens)
         self.cells = []
+        rowNumber = 1
         for givenRow in givens:
             row = []
+            columnNumber = 1
             for givenValueChar in givenRow:
                 if givenValueChar != ' ':
                     if givenValueChar == '.':
                         givenValueChar = '0'
                     givenValue = int(givenValueChar)
-                    row.append(Cell(givenValue))
+                    row.append(Cell(givenValue, rowNumber, columnNumber))
+                    columnNumber += 1
             self.cells.append(row)
+            rowNumber += 1
 
     def getCell(self, sudoku_row: int, sudoku_column: int):
         if sudoku_row < 1 or 9 < sudoku_row or sudoku_column < 1 or 9 < sudoku_column:

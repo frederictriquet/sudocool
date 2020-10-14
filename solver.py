@@ -94,16 +94,16 @@ class Solver:
 
     def gridIsSolved(self) -> bool:
         constraintsOK = self.checkConstraints()
-        print(f'ALL CONSTRAINTS ARE OK: {constraintsOK}')
+        # print(f'ALL CONSTRAINTS ARE OK: {constraintsOK}')
         return constraintsOK
       
     def checkConstraints(self) -> bool:
         result = True
         for subsetName in ConstraintManager.subsets:
-            print(f'processing {subsetName}')
+            # print(f'processing {subsetName}')
             for constraint in ConstraintManager.subsets[subsetName]:
                 constraintResult = self.verifyConstraint(constraint, subsetName)
-                print(f'   {constraint} -> {constraintResult}')
+                # print(f'   {constraint} -> {constraintResult}')
                 if not constraintResult:
                     result = False
                 #    return result
@@ -118,8 +118,10 @@ class Solver:
             return self.verifySumEqualsToValue(subsetName, constraint['value'])
         elif constraint['name'] == 'antiknight':
             return self.verifyAntiknight()
+        elif constraint['name'] == 'antiking':
+            return self.verifyAntiking()
         else:
-            print(f'unknown constraint {constraint} applied on subset {subsetName}')
+            print(f'@solver.verifyConstraint: unknown constraint {constraint} applied on subset {subsetName}')
             return False
 
     def verifyNoDuplicates(self, subsetName: str) -> bool:
@@ -144,10 +146,16 @@ class Solver:
         return sum == value
 
     def verifyAntiknight(self) -> bool:
+        return self.verifyOnGenerator(self.getKnightTargets)
+
+    def verifyAntiking(self) -> bool:
+        return self.verifyOnGenerator(self.getKingTargets)
+    
+    def verifyOnGenerator(self, generator) -> bool:
         for cellDefinition in SubsetManager.cellDefinitionsOf('grid'):
             cell = self.currentGrid.getCell(cellDefinition[0], cellDefinition[1])
             if cell and cell.value > 0:
-                for targetRow, targetColumn in self.getKnightTargets():
+                for targetRow, targetColumn in generator():
                     targetCell = self.currentGrid.getCell(cellDefinition[0] + targetRow, cellDefinition[1] + targetColumn)
                     if targetCell and targetCell.value == cell.value:
                         return False
@@ -174,16 +182,30 @@ class Solver:
         areValuesRemoved = False
         if constraint['name'] == 'antiknight':
             areValuesRemoved = areValuesRemoved or self.removeValuesFromCandidateAtKnightPosition()
+        elif constraint['name'] == 'antiking':
+            areValuesRemoved = areValuesRemoved or self.removeValuesFromCandidateAtKingPosition()
+        else:
+            print(f"@applyGridConstraintRestriction: unknwon constraint {constraint['name']}")
         return areValuesRemoved
 
     def removeValuesFromCandidateAtKnightPosition(self) -> bool:
+        return self.removeValuesFromCandidateAtGeneratorPosition(self.getKnightTargets)
+
+    def removeValuesFromCandidateAtKingPosition(self) -> bool:
+        return self.removeValuesFromCandidateAtGeneratorPosition(self.getKingTargets)
+
+    def removeValuesFromCandidateAtGeneratorPosition(self, generator) -> bool:
+        areValuesRemoved = False
         for cellDefinition in SubsetManager.cellDefinitionsOf('grid'):
             cell = self.currentGrid.getCell(cellDefinition[0], cellDefinition[1])
             if cell and cell.value > 0:
-                for targetRow, targetColumn in self.getKnightTargets():
+                for targetRow, targetColumn in generator():
                     targetCell = self.currentGrid.getCell(cellDefinition[0] + targetRow, cellDefinition[1] + targetColumn)
                     if targetCell and targetCell.value == 0 and cell.value in targetCell.candidates:
                         targetCell.candidates.remove(cell.value)
+                        areValuesRemoved = True
+        return areValuesRemoved
+        
 
     def getKnightTargets(self):
         yield -2,-1
@@ -194,6 +216,18 @@ class Solver:
         yield  2,-1
         yield  1,-2
         yield -1,-2
+
+    def getKingTargets(self):
+        yield -1,-1
+        yield -1, 0
+        yield -1, 1
+
+        yield  0,-1
+        yield  0, 1
+
+        yield  1,-1
+        yield  1, 0
+        yield  1, 1
 
 
     def applyConstraintRestriction(self, constraint: dict, subsetName: str) -> bool:
@@ -216,10 +250,12 @@ class Solver:
         
         for cell in SubsetManager.cellsOf(self.currentGrid, subsetName):
             if cell.value == 0:
+                savedCellCandidates = cell.candidates
                 previousLen = len(cell.candidates)
                 cell.candidates = list(set(cell.candidates) - values)
                 cell.candidates.sort()
                 if previousLen > len(cell.candidates):
+                    # print(f'r{cell.row}c{cell.column} Removed value {list(set(savedCellCandidates) - set(cell.candidates))}')
                     areValuesRemoved = True
 
         return areValuesRemoved
@@ -234,10 +270,9 @@ class Solver:
         for value in range(1,10):
             if len(counts[value]) == 1:
                 cell = counts[value][0]
+                print(f'r{cell.row}c{cell.column} Promoted single {value} ')
                 cell.value = value
                 areValuesRemoved = True
-                # print(f'hidden single found in {subsetName}: {cell.candidates} -> {value}')
-                # print('*',end='')
         return areValuesRemoved
 
     def spotAndRemoveTuples(self, subsetName: str) -> bool:
@@ -259,13 +294,13 @@ class Solver:
                     values.update(cell.candidates)
                     selectedCellNumbers.add(cellNumber)
             if len(values) == size and len(selectedCellNumbers) == size:
-                res = self.removeTupleFromSubset(values,selectedCellNumbers, subset)
+                res = self.removeTupleFromSubset(values,selectedCellNumbers, subset, subsetName, size)
                 if res:
                     areValuesRemoved = True
         return areValuesRemoved
 
 
-    def removeTupleFromSubset(self, valuesToRemove: set, protectedCellNumbers: list, subset: list):
+    def removeTupleFromSubset(self, valuesToRemove: set, protectedCellNumbers: list, subset: list, subsetName: str, size: int):
         areValuesRemoved = False
         for index, cellDefinition in enumerate(subset):
             if index not in protectedCellNumbers:
@@ -275,6 +310,8 @@ class Solver:
                     cell.candidates = list(set(cell.candidates) - valuesToRemove)
                     cell.candidates.sort()
                     if previousLen > len(cell.candidates):
+                        print(f'r{cell.row}c{cell.column} Removed value {valuesToRemove} {size}-tuple spotted in {subsetName}')
+                        print(subset)
                         areValuesRemoved = True
 
         return areValuesRemoved
